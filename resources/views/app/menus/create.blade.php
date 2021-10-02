@@ -104,7 +104,7 @@
 <ul>
 @foreach ($fg as $g)
     @if ($loop->first)
-    <input type="checkbox"  data-id="#{{ $g->id }}g" class="foodgroup" data-val='{{ $g->id }}g' value="{{$g->menu_category_id}}" name="" id="">
+    <input type="checkbox"  data-id="#{{ $g->id }}g" class="foodgroup" data-v='{{ $g->menu_category_id }}' data-val='{{ $g->id }}g' value="{{$g->menu_category_id}}" name="" id="">
         
     @endif
 <li data-name="{{ $g->name }}">{{$g->name}}</li>
@@ -112,7 +112,6 @@
 @endforeach
 </ul>
 @endforeach
-
 
 
 <style>
@@ -167,16 +166,16 @@
             gid = $(this).attr('data-id')
             $('#addedbox').append(
                 `<tr id='${$(this).attr('data-val')}'>
-                    
+                <input type="hidden" class="quantity" value=" ${$(this).attr('data-v')}" name="food_group[]" type="text">
                 </tr>`
             )
             sibs.forEach(function(sib, index){
                 $(gid).append(
-                    
                     `
                     <tr>
                     <td>${sib.innerText}</td>
-                    <td><input class="quantity"  name="quantity[]" type="text"></td>
+                    
+                    <td><input class="quantity"  name="group_quantity[]" type="text"></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -199,7 +198,7 @@
     $('.select').on('change', function(){
         if($(this).prop('checked') === true){
             foodid= this.value;
-            
+           
             $('#addedbox').append(
             ` <tr id='${$(this).attr('value')}'>
                     <td>${$(this).attr('data-name')}</td>

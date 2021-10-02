@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kot;
 use App\Models\Menu;
 use App\Models\User;
 use App\Models\Order;
@@ -18,7 +19,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $this->authorize('view-any', Order::class);
-
+        
         $search = $request->get('search', '');
 
         $orders = Order::search($search)
@@ -35,13 +36,20 @@ class OrderController extends Controller
     public function create(Request $request)
     {
         $this->authorize('create', Order::class);
-
+        $user = User::all();
+        $menu = Menu::all();
         $menus = Menu::pluck('image', 'id');
         $users = User::pluck('name', 'id');
-
-        return view('app.orders.create', compact('menus', 'users'));
+        
+        return view('app.orders.create', compact('menu','user','menus', 'users'));
     }
 
+    function categoryname(Request $request){
+      
+        
+        return Kot::where('menu_category_id', $request->menuid)->get();
+    }
+    
     /**
      * @param \App\Http\Requests\OrderStoreRequest $request
      * @return \Illuminate\Http\Response

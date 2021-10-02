@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kot;
 use App\Models\Food;
 use App\Models\Menu;
 use App\Models\Unit;
@@ -19,7 +20,23 @@ class MenuController extends Controller
 {
     public function savefinalmenu(Request $request)
     {
-        return $request->all();
+        //return $request->all();
+         $food_id= implode(',',$request->food_id);
+         $food_quantity= implode(',',$request->quantity);
+         $food_group= implode(',',$request->food_group);
+         $group_quantity= implode(',',$request->group_quantity);
+        
+         Kot::create([
+           'company_id' =>$request->company_id,
+           'menu_category_id'=> $request->menu_category_id,
+           'food_id'=> $food_id,
+           'food_group'=> $food_group,
+           'quantity'=> $food_quantity,
+           'group_quantity'=>$group_quantity
+         ]);
+
+         return back();
+    
     }
     /**
      * @param \Illuminate\Http\Request $request
@@ -171,6 +188,5 @@ class MenuController extends Controller
     {
         
         return $request->all();
-        return FixedFood::groupBy('id')->get();
     }
 }

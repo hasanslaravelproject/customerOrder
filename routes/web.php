@@ -227,6 +227,11 @@ Route::prefix('/')
         Route::get('orders/create', [OrderController::class, 'create'])->name(
             'orders.create'
         );
+
+        Route::get('orders/catname', [OrderController::class, 'categoryname'])->name(
+            'orders.catname'
+        );
+        
         Route::get('orders/{order}', [OrderController::class, 'show'])->name(
             'orders.show'
         );
